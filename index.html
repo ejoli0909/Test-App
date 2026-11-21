@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#7b2d26">
+  <meta name="description" content="BAKE N FRY Treats - Filipino bakery online ordering">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="BAKE N FRY">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>BAKE N FRY Treats</title>
+</head>
+<body>
+  <header class="topbar">
+    <button class="brand" id="homeBtn" aria-label="Go to home">
+      <span class="brand-mark">B<span>&</span>F</span>
+      <span><strong>BAKE N FRY</strong><small>TREATS</small></span>
+    </button>
+    <div class="top-actions">
+      <span id="connectionState" class="status-pill">● Offline-ready</span>
+      <button class="icon-btn" id="cartOpen" aria-label="Open cart">🛒 <b id="cartCount">0</b></button>
+    </div>
+  </header>
+
+  <main>
+    <section id="shopView" class="view active">
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">FRESHLY MADE • FILIPINO FAVORITES</span>
+          <h1>Good days<br><em>start with bread.</em></h1>
+          <p>Your favorite BAKE N FRY treats, ready to order.</p>
+          <button class="primary-btn" id="browseBtn">Browse products <span>→</span></button>
+        </div>
+        <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="bread-emoji">🥐</div><div class="hero-stamp">BAKED<br>WITH<br>LOVE</div></div>
+      </section>
+
+      <div class="section-heading" id="productsAnchor">
+        <div><span class="eyebrow">OUR MENU</span><h2>Fresh from our bakery</h2></div>
+        <span class="menu-count" id="productCount">0 items</span>
+      </div>
+      <div class="category-row" id="categoryFilters">
+        <button class="chip selected" data-category="All">All</button>
+        <button class="chip" data-category="Bread">Bread</button>
+        <button class="chip" data-category="Pastries">Pastries</button>
+        <button class="chip" data-category="Sweets">Sweets</button>
+      </div>
+      <div id="productGrid" class="product-grid"></div>
+      <div class="empty-state hidden" id="emptyProducts">No products in this category yet.</div>
+
+      <section class="trust-strip">
+        <div>🥖 <span><b>Filipino favorites</b><small>Made for sharing</small></span></div>
+        <div>📦 <span><b>Easy ordering</b><small>Review before confirming</small></span></div>
+        <div>📱 <span><b>Works offline</b><small>Orders saved on this device</small></span></div>
+      </section>
+    </section>
+
+    <section id="cartView" class="view">
+      <div class="page-heading"><button class="back-btn" data-go="shopView">← Shop</button><span class="eyebrow">YOUR SELECTION</span><h1>Shopping cart</h1></div>
+      <div id="cartItems" class="cart-list"></div>
+      <div id="cartEmpty" class="empty-card"><div>🛒</div><h2>Your cart is empty</h2><p>Add some bakery favorites to get started.</p><button class="primary-btn" data-go="shopView">Explore products</button></div>
+      <div id="cartSummary" class="summary-card hidden">
+        <div class="summary-line"><span>Subtotal</span><b id="cartSubtotal">₱0.00</b></div>
+        <div class="summary-line"><span>Delivery / other fees</span><span>Set during order confirmation</span></div>
+        <div class="summary-line total"><span>Estimated total</span><b id="cartTotal">₱0.00</b></div>
+        <button class="primary-btn full" id="checkoutBtn">Continue to customer details →</button>
+      </div>
+    </section>
+
+    <section id="customerView" class="view">
+      <div class="page-heading"><button class="back-btn" data-go="cartView">← Back to cart</button><span class="eyebrow">CHECKOUT • STEP 1 OF 2</span><h1>Customer details</h1><p>Enter your details so they appear on your order slip.</p></div>
+      <form id="customerForm" class="form-card">
+        <label>Full name<input name="name" autocomplete="name" required maxlength="100" placeholder="Your full name"></label>
+        <label>Complete address<textarea name="address" autocomplete="street-address" required rows="3" maxlength="300" placeholder="House no., street, barangay, city"></textarea></label>
+        <label>Contact number<input name="phone" autocomplete="tel" inputmode="tel" required maxlength="30" placeholder="09XX XXX XXXX"></label>
+        <label>Email address <span class="optional">(optional)</span><input name="email" autocomplete="email" type="email" maxlength="120" placeholder="you@example.com"></label>
+        <p class="privacy-note">Your details are saved only in this browser on this device.</p>
+        <button class="primary-btn full" type="submit">Review my order →</button>
+      </form>
+    </section>
+
+    <section id="reviewView" class="view">
+      <div class="page-heading"><button class="back-btn" data-go="customerView">← Edit details</button><span class="eyebrow">CHECKOUT • STEP 2 OF 2</span><h1>Review your order</h1><p>Double-check everything before confirming.</p></div>
+      <div class="review-card">
+        <h3>Customer</h3><div id="reviewCustomer" class="review-customer"></div>
+        <hr><h3>Items</h3><div id="reviewItems"></div>
+        <hr><div class="summary-line total"><span>Order total</span><b id="reviewTotal">₱0.00</b></div>
+        <p class="privacy-note">Confirming saves this order in the app on this device. It does not automatically send the order to the bakery.</p>
+        <button class="primary-btn full" id="confirmOrderBtn">✓ Confirm order</button>
+      </div>
+    </section>
+
+    <section id="successView" class="view">
+      <div class="success-wrap">
+        <div class="success-icon">✓</div><span class="eyebrow">ORDER SAVED ON THIS DEVICE</span>
+        <h1>Thank you!</h1><p>Your order slip is ready.</p>
+        <div class="order-number-card"><small>YOUR ORDER NUMBER</small><strong id="successOrderNumber">BNF-0001</strong><span id="successDate"></span></div>
+        <div class="receipt-card" id="receiptContent"></div>
+        <div class="receipt-actions">
+          <button class="primary-btn" id="downloadJpgBtn">↓ Download JPG</button>
+          <button class="secondary-btn" id="printPdfBtn">↓ Print / Save PDF</button>
+        </div>
+        <button class="text-btn" id="newOrderBtn">Start a new order</button>
+      </div>
+    </section>
+
+    <section id="ordersView" class="view">
+      <div class="page-heading"><button class="back-btn" data-go="shopView">← Shop</button><span class="eyebrow">LOCAL ORDER HISTORY</span><h1>My orders</h1><p>Orders saved on this device only.</p></div>
+      <div id="ordersList"></div>
+      <div id="ordersEmpty" class="empty-card"><div>📋</div><h2>No saved orders yet</h2><p>Your confirmed orders will appear here.</p></div>
+    </section>
+
+    <section id="adminView" class="view">
+      <div class="page-heading"><button class="back-btn" data-go="shopView">← Shop</button><span class="eyebrow">STORE TOOLS</span><h1>Manage store</h1><p>Changes are stored locally on this device.</p></div>
+      <div class="admin-tabs"><button class="chip selected" data-admin-tab="products">Products</button><button class="chip" data-admin-tab="orders">Orders</button><button class="chip" data-admin-tab="data">Data & backup</button></div>
+      <div id="adminProducts" class="admin-panel"></div>
+      <div id="adminOrders" class="admin-panel hidden"></div>
+      <div id="adminData" class="admin-panel hidden">
+        <div class="form-card"><h3>Backup your store data</h3><p>Export your products, prices and orders to a JSON backup file. Keep a copy before clearing browser data or changing phones.</p><button class="primary-btn full" id="exportDataBtn">Export backup</button><label class="file-label">Import backup<input type="file" id="importDataInput" accept="application/json"></label><button class="danger-btn full" id="clearOrdersBtn">Delete all saved orders</button><p class="privacy-note">There is no cloud backup or automatic sync in this offline-only version.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-go="shopView"><span>⌂</span>Shop</button>
+    <button class="nav-item" data-go="cartView"><span>🛒</span>Cart</button>
+    <button class="nav-item" data-go="ordersView"><span>▤</span>Orders</button>
+    <button class="nav-item" data-go="adminView"><span>⚙</span>Manage</button>
+  </nav>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
